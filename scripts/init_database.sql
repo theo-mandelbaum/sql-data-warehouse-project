@@ -3,7 +3,7 @@
 Create Database and Schemas
 =============================================================
 DISCLAIMER:
-  All of the following commands can be done with no commands in the pgAdmin interface
+  I completed the following script with no commands in the pgAdmin interface
 
 Script Purpose:
     This script creates a new database named 'DataWarehouse' after checking if it already exists. 
