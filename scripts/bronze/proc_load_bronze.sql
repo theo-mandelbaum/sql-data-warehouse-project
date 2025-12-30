@@ -76,7 +76,7 @@ BEGIN
     TRUNCATE TABLE bronze.erp_loc_a101;
     RAISE NOTICE '>> Inserting Data Into: bronze.erp_loc_a101';
     COPY bronze.erp_loc_a101
-    FROM '/Users/theomandelbaum/Downloads/sql-data-warehouse-project/datasets/source_erp/loc_a101.csv'
+    FROM '/Users/theomandelbaum/Downloads/sql-data-warehouse-project/datasets/source_erp/LOC_A101.csv'
     CSV HEADER;
     end_time := NOW();
     RAISE NOTICE '>> Load Duration: % seconds', EXTRACT(EPOCH FROM end_time - start_time);
@@ -87,7 +87,7 @@ BEGIN
     TRUNCATE TABLE bronze.erp_cust_az12;
     RAISE NOTICE '>> Inserting Data Into: bronze.erp_cust_az12';
     COPY bronze.erp_cust_az12
-    FROM '/Users/theomandelbaum/Downloads/sql-data-warehouse-project/datasets/source_erp/cust_az12.csv'
+    FROM '/Users/theomandelbaum/Downloads/sql-data-warehouse-project/datasets/source_erp/CUST_AZ12.csv'
     CSV HEADER;
     end_time := NOW();
     RAISE NOTICE '>> Load Duration: % seconds', EXTRACT(EPOCH FROM end_time - start_time);
@@ -98,7 +98,7 @@ BEGIN
     TRUNCATE TABLE bronze.erp_px_cat_g1v2;
     RAISE NOTICE '>> Inserting Data Into: bronze.erp_px_cat_g1v2';
     COPY bronze.erp_px_cat_g1v2
-    FROM '/Users/theomandelbaum/Downloads/sql-data-warehouse-project/datasets/source_erp/px_cat_g1v2.csv'
+    FROM '/Users/theomandelbaum/Downloads/sql-data-warehouse-project/datasets/source_erp/PX_CAT_G1V2.csv'
     CSV HEADER;
     end_time := NOW();
     RAISE NOTICE '>> Load Duration: % seconds', EXTRACT(EPOCH FROM end_time - start_time);
