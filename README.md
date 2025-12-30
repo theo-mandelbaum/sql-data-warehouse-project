@@ -1,3 +1,8 @@
+# Notes / Mistakes I Made
+
+- Originally, I made the prd_start_dt fields in the bronze.crm_prd_info table DATE fields. However, this was meant to be done during data cleaning, not during table creation.
+
+
 # sql-data-warehouse-project
 Building a modern data warehouse with a SQL server, including ETL processes, data modeling, and analytics
 
