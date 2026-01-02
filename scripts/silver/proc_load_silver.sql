@@ -11,7 +11,26 @@ Usage Example:
 CREATE OR REPLACE PROCEDURE silver.load_silver()
 LANGUAGE plpgsql
 AS $$
-BEGIN 
+DECLARE
+    start_time TIMESTAMP;
+    end_time TIMESTAMP;
+    batch_start_time TIMESTAMP;
+    batch_end_time TIMESTAMP;
+BEGIN
+	batch_start_time := NOW();
+    RAISE NOTICE '================================================';
+    RAISE NOTICE 'Loading Silver Layer';
+    RAISE NOTICE '================================================';
+
+	------------------------------------------------------------------------
+    -- CRM Tables
+    ------------------------------------------------------------------------
+    RAISE NOTICE '------------------------------------------------';
+    RAISE NOTICE 'Cleaning CRM Tables';
+    RAISE NOTICE '------------------------------------------------';
+
+	-- crm_cust_info
+    start_time := NOW();
 	RAISE NOTICE '>> Truncating Table: silver.crm_cust_info';
 	TRUNCATE TABLE silver.crm_cust_info;
 	RAISE NOTICE '>> Inserting Data into silver.crm_cust_info';
@@ -44,7 +63,11 @@ BEGIN
 		FROM bronze.crm_cust_info
 		WHERE cst_id IS NOT NULL
 	)t WHERE flag_last = 1;
-	
+	end_time := NOW();
+    RAISE NOTICE '>> Clean Duration: % seconds', EXTRACT(EPOCH FROM end_time - start_time);
+
+	-- crm_prd_info
+    start_time := NOW();
 	RAISE NOTICE '>> Truncating Table: silver.crm_prd_info';
 	TRUNCATE TABLE silver.crm_prd_info;
 	RAISE NOTICE '>> Inserting Data into silver.prd_cust_info';
@@ -74,7 +97,11 @@ BEGIN
 		prd_start_dt,
 		LEAD(prd_start_dt) OVER (PARTITION BY prd_key ORDER BY prd_start_dt)-1 AS prd_end_dt
 	FROM bronze.crm_prd_info;
-	
+	    end_time := NOW();
+    RAISE NOTICE '>> Load Duration: % seconds', EXTRACT(EPOCH FROM end_time - start_time);
+
+	-- crm_sales_details
+    start_time := NOW();
 	RAISE NOTICE '>> Truncating Table: silver.crm_sales_details';
 	TRUNCATE TABLE silver.crm_sales_details;
 	RAISE NOTICE '>> Inserting Data into silver.crm_sales_details';
@@ -112,7 +139,18 @@ BEGIN
 			ELSE sls_price
 		END AS sls_price
 	FROM bronze.crm_sales_details;
-	
+	end_time := NOW();
+    RAISE NOTICE '>> Load Duration: % seconds', EXTRACT(EPOCH FROM end_time - start_time);
+
+	------------------------------------------------------------------------
+    -- ERP Tables
+    ------------------------------------------------------------------------
+    RAISE NOTICE '------------------------------------------------';
+    RAISE NOTICE 'Cleaning ERP Tables';
+    RAISE NOTICE '------------------------------------------------';
+
+    -- erp_cust_az12
+    start_time := NOW();
 	RAISE NOTICE '>> Truncating Table: silver.erp_cust_az12';
 	TRUNCATE TABLE silver.erp_cust_az12;
 	RAISE NOTICE '>> Inserting Data into silver.erp_cust_az12';
@@ -133,7 +171,11 @@ BEGIN
 			ELSE 'n/a'
 		END as gen
 	FROM bronze.erp_cust_az12;
-	
+	end_time := NOW();
+    RAISE NOTICE '>> Load Duration: % seconds', EXTRACT(EPOCH FROM end_time - start_time);
+
+	-- erp_loc_a101
+    start_time := NOW();
 	RAISE NOTICE '>> Truncating Table: silver.erp_loc_a101';
 	TRUNCATE TABLE silver.erp_loc_a101;
 	RAISE NOTICE '>> Inserting Data into silver.erp_loc_a101';
@@ -149,7 +191,11 @@ BEGIN
 			ELSE TRIM(cntry)
 		END AS cntry
 	FROM bronze.erp_loc_a101;
-	
+	end_time := NOW();
+    RAISE NOTICE '>> Load Duration: % seconds', EXTRACT(EPOCH FROM end_time - start_time);
+
+	-- erp_px_cat_g1v2
+    start_time := NOW();
 	RAISE NOTICE '>> Truncating Table: silver.erp_px_cat_g1v2';
 	TRUNCATE TABLE silver.erp_px_cat_g1v2;
 	RAISE NOTICE '>> Truncating Table: silver.erp_px_cat_g1v2';
@@ -161,9 +207,16 @@ BEGIN
 		subcat,
 		maintenance
 	FROM bronze.erp_px_cat_g1v2;
+	end_time := NOW();
+    RAISE NOTICE '>> Load Duration: % seconds', EXTRACT(EPOCH FROM end_time - start_time);
 
+	------------------------------------------------------------------------
+    -- Total duration
+    ------------------------------------------------------------------------
+    batch_end_time := NOW();
     RAISE NOTICE '==========================================';
     RAISE NOTICE 'Loading Silver Layer Completed';
+    RAISE NOTICE 'Total Load Duration: % seconds', EXTRACT(EPOCH FROM batch_end_time - batch_start_time);
     RAISE NOTICE '==========================================';
 EXCEPTION
     WHEN OTHERS THEN
