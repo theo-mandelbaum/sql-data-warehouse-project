@@ -1,7 +1,7 @@
 /*
 Stored Procedure: Load Bronze later (Source -> Bronze)
 
-Purpose: This stored prodecure loads data ito the 'bronze' schema from the external CSV files listed in the 'datasets' directory
+Purpose: This stored prodecure loads data into the 'bronze' schema from the external CSV files listed in the 'datasets' directory
   This script trucates the bronze tables and then loads the data from each CSV
   It uses the 'COPY' command to load data from csv files to the bronze tables
 
