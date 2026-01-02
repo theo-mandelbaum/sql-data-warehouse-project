@@ -8,9 +8,10 @@ Purpose: This stored prodecure loads data ito the 'silver' schema from the exter
 Usage Example:
   CALL silver.load_silver();
 */
+CREATE OR REPLACE PROCEDURE silver.load_silver()
+LANGUAGE plpgsql
+AS $$
 BEGIN 
-	CREATE OR ALTER PROCEDURE silver.load_silver() AS
-	
 	RAISE NOTICE '>> Truncating Table: silver.crm_cust_info';
 	TRUNCATE TABLE silver.crm_cust_info;
 	RAISE NOTICE '>> Inserting Data into silver.crm_cust_info';
@@ -75,7 +76,7 @@ BEGIN
 	FROM bronze.crm_prd_info;
 	
 	RAISE NOTICE '>> Truncating Table: silver.crm_sales_details';
-	TRUNCATE TABLE silver.sales_details;
+	TRUNCATE TABLE silver.crm_sales_details;
 	RAISE NOTICE '>> Inserting Data into silver.crm_sales_details';
 	INSERT INTO silver.crm_sales_details (
 		sls_ord_num,
@@ -160,4 +161,14 @@ BEGIN
 		subcat,
 		maintenance
 	FROM bronze.erp_px_cat_g1v2;
-END
+
+    RAISE NOTICE '==========================================';
+    RAISE NOTICE 'Loading Silver Layer Completed';
+    RAISE NOTICE '==========================================';
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE WARNING '==========================================';
+        RAISE WARNING 'ERROR OCCURRED DURING LOADING Silver LAYER';
+        RAISE WARNING '%', SQLERRM;
+        RAISE WARNING '==========================================';
+END $$;
