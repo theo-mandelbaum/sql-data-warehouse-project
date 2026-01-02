@@ -3,7 +3,7 @@ Stored Procedure: Load Silver later (Source -> Silver)
 
 Purpose: This stored prodecure loads data ito the 'silver' schema from the external CSV files listed in the 'datasets' directory
   This script trucates the silver tables and then loads the data from each CSV
-  It uses the 'COPY' command to load data from csv files to the bronze tables
+  It uses a series of SQL queries to clean data from the bronze tables to the silver tables
 
 Usage Example:
   CALL silver.load_silver();
