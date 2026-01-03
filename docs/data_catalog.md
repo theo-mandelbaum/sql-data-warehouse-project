@@ -43,3 +43,22 @@ The Gold Layer is the business-level data representation, structured to support 
 | cost           | INT         | The price of each product in dollars |
 | product_line   | VARCHAR(50) | The specific series or product line that the product belongs to (e.g., 'Mouintain', 'Touring') |
 | start_date     | DATE        | Date that the product became available for sale or use |
+
+
+3. gold.fact_sales
+
+- Purpose: The purpose of this fact is to include all sales information, as well as relate it to the products and customers data
+
+- Columns:
+
+| Column Name    | Data Type   | Description |
+|----------------|-------------|-------------|
+| order_number   | VARCHAR(50) | Alphanumeric value to represent each specific order |
+| product_key    | INT         | Key representing the prodcut that was involved in an order |
+| customer_key   | INT         | key representing the customer who placed an order |
+| order_date     | DATE        | Date that the order was placed |
+| shipping_date  | DATE        | Date that the order was shipped |
+| due_date       | DATE        | Date that the order payment was due |
+| sales_amount   | INT         | Total monetary value of the sale |
+| quantity       | INT         | Total number of units of the product that were ordered |
+| price          | INT         | Price per unit of the product that was ordered |
