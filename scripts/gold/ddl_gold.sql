@@ -1,4 +1,5 @@
 
+DROP VIEW IF EXISTS gold.dim_customers;
 
 CREATE VIEW gold.dim_customers AS
 SELECT
@@ -20,6 +21,8 @@ ON ci.cst_key = ca.cid
 LEFT JOIN silver.erp_loc_a101 la
 ON ci.cst_key = la.cid;
 
+
+DROP VIEW IF EXISTS gold.dim_products;
 
 CREATE VIEW gold.dim_products AS
 SELECT 
