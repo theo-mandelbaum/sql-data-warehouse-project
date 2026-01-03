@@ -9,6 +9,7 @@ The Gold Layer is the business-level data representation, structured to support 
 - Purpose: The purpose of this dimension is to include all customer details, including demographic and geographic data.
 
 - Columns:
+
 | Column name   | Data Type | Description |
 |---------------|-----------|-------------|
 | customer_key  | INT       | Surrogate key that uniquely identifies each customer record in the dimension table |
