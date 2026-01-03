@@ -43,6 +43,8 @@ ON pn.cat_id = pc.id
 WHERE pn.prd_end_dt IS NULL -- Filter out all historical data
 
 
+DROP VIEW IF EXISTS gold.fact_sales;
+
 CREATE VIEW gold.fact_sales AS
 SELECT 
 	sd.sls_ord_num AS order_number,
