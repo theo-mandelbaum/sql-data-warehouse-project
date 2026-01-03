@@ -10,10 +10,10 @@ The Gold Layer is the business-level data representation, structured to support 
 
 - Columns:
 
-| Column name     | Data Type   | Description |
+| Column Name     | Data Type   | Description |
 |-----------------|-------------|-------------|
 | customer_key    | INT         | Surrogate key that uniquely identifies each customer record in the dimension table   |
-| customer_id     | INT         | Unique identifier for each customer listed |
+| customer_id     | INT         | Unique identifier for each customer |
 | customer_number | VARCHAR(50) | Alphanumeric value to represent the customer, used for referencing and tracking |
 | first_name      | VARCHAR(50) | First name of the customer |
 | last_name       | VARCHAR(50) | Last name of the customer |
@@ -21,4 +21,25 @@ The Gold Layer is the business-level data representation, structured to support 
 | marital_status  | VARCHAR(50) | Marital status of the customer (e.g., 'Married') |
 | gender          | VARCHAR(50) | Gender of the customer (e.g., 'Male', 'Female') |
 | birthdate       | DATE        | Date of birth of the customer formatted YYYY-MM-DD (e.g., 2001-08-03) |
-| create_date     | DATE        | Date and time that the customers record was created |
+| create_date     | DATE        | Date that the customer's record was created |
+
+
+2. gold.dim_products
+
+- Purpose: The purpose of this dimension is to include all product details and their attributes
+
+- Columns:
+
+| Column Name    | Data Type   | Description |
+|----------------|-------------|-------------|
+| product_key    | INT         | Surrogate key that uniquely identifies each product record |
+| product_id     | INT         | Unique identifier for each product |
+| product_number | VARCHAR(50) | Alphanumeric value to represent the product, used for referencing and tracking |
+| product_name   | VARCHAR(50) | Name of the product (e.g, 'Mountain Bottle Cage') |
+| category_id    | INT         | Unique identifier for the category of the product |
+| category       | VARCHAR(50) | Name of the broader classification of the product (e.g., 'Accessories') |
+| subcategory    | VARCHAR(50) | Name of the more detailed classification of the product, within the category (e.g., 'Cleaners') |
+| maintenance    | VARCHAR(50) | Inidicates whether the product requires maintenance or not (e.g., 'Yes', 'No' ) |
+| cost           | INT         | The price of each product in dollars |
+| product_line   | VARCHAR(50) | The specific series or product line that the product belongs to (e.g., 'Mouintain', 'Touring') |
+| start_date     | DATE        | Date that the product became available for sale or use |
